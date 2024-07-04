@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+
 const CreateTalent = (props) => {
     { console.log(props) }
 
@@ -11,6 +12,8 @@ const CreateTalent = (props) => {
     const [category, setCategory] = useState("")
     const [rating, setRating] = useState("")
     const [file, setFile] = useState('')
+    const [loading, setLoading] = useState(false);
+    const [res, setRes] = useState({});
 
     console.log(imageUrl)
 
@@ -28,54 +31,101 @@ const CreateTalent = (props) => {
         }
 
     }
-
-    const upload = async () => {
+    const handleUpload = async () => {
         try {
-            await axios.post("/api/talents/upload").then((result) => {
-                console.log(result)
-            })
-
-        } catch (err) {
-            console.error(err);
-
+            setLoading(true);
+            const data = new FormData();
+            data.append("my_file", file);
+            const res = await axios.post("http://127.0.0.1:5000/api/talents/upload", data);
+            setRes(res.data);
+            setImageUrl(res.data.secure_url)
+            console.log(res.data.secure_url)
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div>
+        <div className='flex flex-col'>
+            <div className="max-w-md mx-auto bg-white p-8 rounded-lg ">
+                <div class="mb-4">
+                    <img src={imageUrl} />
+                    <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Upload Image:</label>
+                    <input type="file" class="outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={(e) => setFile(e.target.files[0])} />
+                    <br />
+                    <button class=" ml-28 mt-8 bg-[#108a00] hover:bg-[#3d9731] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => { handleUpload() }}>upload!</button>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                        <input type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder=" Your Title" value={title}
+                            onChange={(e) => { setTitle(e.target.value) }} />
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                        <textarea type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder=" Your Description" value={description}
+                            onChange={(e) => { setDescription(e.target.value) }} />
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Price:</label>
+                        <input type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder=" Your Price" value={price} onChange={(e) => {
+                            setPrice(e.target.value)
+                        }} />
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+                        <input type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder=" Your Category" value={category} onChange={(e) => {
+                            setCategory(e.target.value)
+                        }} />
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Rating:</label>
+                        <input type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Rating" value={rating}
+                            onChange={(e) => { setRating(e.target.value) }}
+                        />
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
 
-            <h1>Create New Talent</h1>
-            <input type="text" placeholder=" Your Title" value={title}
-                onChange={(e) => { setTitle(e.target.value) }} />
-            <input type="text" placeholder=" Your Description" value={description}
-                onChange={(e) => { setDescription(e.target.value) }} />
 
-            <img src={imageUrl} />
+                <button class=" ml-28 mt-8 bg-[#108a00] hover:bg-[#3d9731] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="submit" onClick={() => {
+                    props.add({
+                        title: title,
+                        description: description,
+                        imageUrl: imageUrl,
+                        price: price,
+                        category: category,
+                        rating: rating,
+                        freelancer_id: "1"
+                    })
+                }}>Create</button>
+            </div>
 
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-            <br />
-            <button onClick={() => { uploadImage() }}>upload!</button>
-            <input type="text" placeholder=" Your Price" value={price} onChange={(e) => {
-                setPrice(e.target.value)
-            }} />
-            <input type="text" placeholder=" Your Category" value={category} onChange={(e) => {
-                setCategory(e.target.value)
-            }} />
 
-            <input type="text" placeholder="Your Rating" value={rating}
-                onChange={(e) => { setRating(e.target.value) }}
-            />
-            <button value="submit" onClick={() => {
-                props.add({
-                    title: title,
-                    description: description,
-                    imageUrl: imageUrl,
-                    price: price,
-                    category: category,
-                    rating: rating,
-                    freelancer_id: "1"
-                })
-            }}>Create</button>
         </div>
     )
 }
