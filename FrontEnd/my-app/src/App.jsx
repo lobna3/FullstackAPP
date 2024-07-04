@@ -15,10 +15,10 @@ import axios from 'axios'
 
 function App() {
   const [SignUprole,setSignUpRole]=useState('')
-  const [userRole,setUserRole]=useState('freelancer')
+  const [userRole,setUserRole]=useState('')
   const [talents, setTalents] = useState([])
   const [refetsch, setRefetsch] = useState(false)
-  
+
 
   const getTalents = () => {
     axios.get('http://127.0.0.1:5000/api/talents/getAll').then((response) => {
@@ -52,7 +52,7 @@ function App() {
         <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
         <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
         <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
-        <Route path="/login" element={<Login/>} />
+        <Route path="/login" element={<Login userRole={setUserRole}/>} />
         <Route path="/programming" element={<Programming />} />
         <Route path="/graphics" element={<Graphics />} />
         <Route path="/digital-marketting" element={<DigitalMarketting />} />
