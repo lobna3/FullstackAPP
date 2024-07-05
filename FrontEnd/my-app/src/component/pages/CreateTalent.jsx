@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const CreateTalent = (props) => {
     { console.log(props) }
     const navigate = useNavigate()
-    
+
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [imageUrl, setImageUrl] = useState("")
@@ -22,7 +22,7 @@ const CreateTalent = (props) => {
     const uploadImage = async () => {
         const form = new FormData()
         form.append('file', file)
-        form.append("upload_preset", "lobnasm");
+        form.append("upload_preset", "lobnasm")
         try {
             await axios.post("https://api.cloudinary.com/v1_1/dzhteldwd/upload", form).then((result) => {
                 console.log(result.data.secure_url)
@@ -39,7 +39,7 @@ const CreateTalent = (props) => {
             const data = new FormData()
             data.append("my_file", file)
             const res = await axios.post("http://127.0.0.1:5000/api/talents/upload", data)
-            setRes(res.data);
+            setRes(res.data)
             setImageUrl(res.data.secure_url)
             console.log(res.data.secure_url)
         } catch (error) {
