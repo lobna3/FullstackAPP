@@ -12,6 +12,7 @@ import DigitalMarketting from './component/pages/DigitalMarketting.jsx';
 import Login from './component/pages/Login.jsx';
 import CreateTalent from './component/pages/CreateTalent.jsx';
 import axios from 'axios'
+import AllTalent from './component/pages/AllTalent.jsx';
 
 function App() {
   const [SignUprole,setSignUpRole]=useState('')
@@ -57,6 +58,7 @@ function App() {
         <Route path="/graphics" element={<Graphics />} />
         <Route path="/digital-marketting" element={<DigitalMarketting />} />
         <Route path="/addtalent" element={<CreateTalent add={postTalent}/>}></Route>
+        <Route path="/alltalent" element ={<AllTalent talents={talents}/>}></Route>
       </Routes>
        <Footer/>
     </Router>

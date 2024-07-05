@@ -46,23 +46,32 @@
         }
     ],
     "talents": [
-        {
-            "title": "ReactJs",
-            " description": "React JS | React Developer | Front End Developer | Reactjs | Figma to",
-            "imageUrl": "http://localhost:5173/src/image/skill.jpg",
-            "price:": "200",
-            "category": "It",
-            "rating": "3",
-            "freelancer_id": "1"
-        },
-        {
-            "title": "NodeJs",
-            " description": "React JS | React Developer | Front End Developer | Reactjs | Figma to",
-            "imageUrl": "http://localhost:5173/src/image/skill.jpg",
-            "price:": "400",
-            "category": "It",
-            "rating": "2",
-            "freelancer_id": "1"
-        }
+        { 
+            "title": "Web Development",
+            "description": "Creating dynamic and responsive websites.",
+            "imageUrl": "https://example.com/web-dev.jpg",
+            "price": 100,
+            "category": "Programming",
+            "rating": 4,
+            "freelancer_id": 1 
+          },
+          { 
+            "title": "Graphic Design",
+            "description": "Designing logos, banners, and illustrations.",
+            "imageUrl": "https://example.com/graphic-design.jpg",
+            "price": 80,
+            "category": "Design",
+            "rating": 5,
+            "freelancer_id": 2
+          },
+          { 
+            "title": "Content Writing",
+            "description": "Creating engaging and SEO-friendly content.",
+            "imageUrl": "https://example.com/content-writing.jpg",
+            "price": 70,
+            "category": "Writing",
+            "rating": 4,
+            "freelancer_id": 3
+          }
     ]
 }
