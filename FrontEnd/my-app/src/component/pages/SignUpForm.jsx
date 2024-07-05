@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
+import PopSignUp from '../../popups/SignUpPopSucc.jsx'
 const SignUpForm = (props) => {
 const [name,setName]=useState('')
 const [email,setEmail]=useState('')
