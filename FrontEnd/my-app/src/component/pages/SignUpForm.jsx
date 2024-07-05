@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { MdError } from "react-icons/md";
 import Logo from '../../image/th-logo.png'
+import PopSignUp from '../../popups/SignUpPopSucc.jsx'
 const SignUpForm = (props) => {
 const [name,setName]=useState('')
 const [email,setEmail]=useState('')
