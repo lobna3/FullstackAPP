@@ -15,7 +15,7 @@ import axios from 'axios'
 
 function App() {
   const [SignUprole,setSignUpRole]=useState('')
-  const [userRole,setUserRole]=useState('freelancer')
+  const [userRole,setUserRole]=useState('')
   const [talents, setTalents] = useState([])
   const [refetsch, setRefetsch] = useState(false)
   
