@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
 
 const CreateTalent = (props) => {
     { console.log(props) }
-
+    const navigate = useNavigate()
+    
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [imageUrl, setImageUrl] = useState("")
@@ -134,7 +135,7 @@ const CreateTalent = (props) => {
                         rating: rating,
                         delivery:delivery,
                         freelancer_id: "1"
-                    })
+                    },navigate('/alltalent'))
                 }}>Create</button>
             </div>
 
