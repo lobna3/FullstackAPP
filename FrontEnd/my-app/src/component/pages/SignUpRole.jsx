@@ -15,9 +15,9 @@ const SignUpRole = (props) => {
             <div className="cont flex flex-row justify-between">
             <img src ={ClientIcon} className='h-10 ml-4'></img>
             <label class="container ml-24 mt-2  ">
-            
-            <input  type="checkbox" name='inpt'  className='hidden'/>
-            <div class="checkmark" onClick={()=>props.setSignUpRole('client')}></div>
+            <div class="form">
+            <input onClick={()=>props.setSignUpRole('client')}  id="01" type="radio" name="r" value="client" checked></input>
+            </div>
             </label>           
              </div>
           <h3 className='text-xl font-semibold mt-4'>I’m a client,<br></br> hiring for a<br></br> project</h3>
@@ -26,8 +26,9 @@ const SignUpRole = (props) => {
             <div className="cont flex flex-row justify-between">
             <img src ={FreelancerIcon} className='h-10 ml-4'></img>
             <label class="container ml-24 mt-2 ">
-            <input  type="checkbox" name='inpt'  className='hidden'/>
-            <div class="checkmark" onClick={()=>props.setSignUpRole('freelancer')}></div>
+            <div class="form">
+            <input onClick={()=>props.setSignUpRole('freelancer')} id="01" type="radio" name="r" ></input>
+            </div>
             </label>
             </div>
           <h3 className='text-xl mt-4 font-semibold'>I’m a freelancer,<br></br> looking for work</h3>
@@ -44,7 +45,7 @@ const SignUpRole = (props) => {
             <button className='mt-10 bg-[#108a00] text-[#fff] p-2.5 rounded-xl '>Apply As Freelancer</button>
           </NavLink> 
         }
-        <h3 className='mt-6'>Already have an account? Log In</h3>
+        <h3 className='mt-6'>Already have an account? <NavLink to='/login' className='text-[#108a00] font-bold'>Log In</NavLink> </h3>
     </div>
   )
 }
