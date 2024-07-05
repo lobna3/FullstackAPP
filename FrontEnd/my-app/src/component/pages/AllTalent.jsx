@@ -11,14 +11,11 @@ const AllTalent = (props) => {
     return (
         <div className='container-prog'>
             <div className="flex items-center justify-center gap-2 mt-10 ml-6">
-
                 <h3 className='text-3xl font-semibold text-[#181818] mt-10 ml-6'>My Talents</h3>
             </div>
             <div className="talents ml-6 flex">
-
                 {props.talents.map((ele, i) =>
-
-                    <div className="talent-card mt-10   rounded-xl cursor-pointer ml-6" key={i}>
+                    <div className="talent-card mt-10 rounded-xl cursor-pointer ml-6" key={i}>
                         <img src={ele.imageUrl} className='w-64 h-64 rounded-xl'></img>
                         <h5 className='p-3 font-semibold text-[#181818] cursor-pointer hover:text-[#108a00]'>{ele.title}</h5>
                         <div className="price-delivery flex items-center">
@@ -33,7 +30,6 @@ const AllTalent = (props) => {
                                 onClick={() => { setOpen(true), setId(ele.id) }}>Delete</button>
                         </div>
                     </div>
-
                 )}
             </div>
             <Alert open={open} onClose={() => setOpen(false)}>
