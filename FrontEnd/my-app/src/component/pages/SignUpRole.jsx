@@ -45,7 +45,7 @@ const SignUpRole = (props) => {
             <button className='mt-10 bg-[#108a00] text-[#fff] p-2.5 rounded-xl '>Apply As Freelancer</button>
           </NavLink> 
         }
-        <h3 className='mt-6'>Already have an account? Log In</h3>
+        <h3 className='mt-6'>Already have an account? <NavLink to='/login' className='text-[#108a00] font-bold'>Log In</NavLink> </h3>
     </div>
   )
 }

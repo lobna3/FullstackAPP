@@ -42,10 +42,9 @@ const Login = (props) => {
       </div>
     </form>
 
-    <p class="mt-10 text-center text-sm text-gray-500">
-      Not a member?
-      <NavLink to='/sign-up-role' class="font-semibold text-[#108a00] ml-4">SignUp</NavLink>
-    </p>
+    <h3 class="mt-10 text-center text-sm text-gray-500">
+      Not a member? <NavLink to='/sign-up-role' class="font-bold text-[#108a00] ml-1">SignUp</NavLink></h3>
+    
   </div>
 </div>
   )
