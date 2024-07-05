@@ -5,8 +5,12 @@ module.exports = {
   getAllTalents: async (req, res) => {
     try {
       const talents = await Talent.findAll({
-        order: [["createdAt", "DESC"]]
-
+        order: [["createdAt", "DESC"]],
+        /*include: [
+          {
+             model: Freelance, as: "talent", attributes: [["name", "email"]] ,
+          }
+        ]*/
       });
       res.status(200).json(talents);
     } catch (error) {
@@ -111,6 +115,6 @@ module.exports = {
     }
   },
 
- 
+
 
 }

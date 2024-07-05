@@ -23,15 +23,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     rating: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    delivery: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-   
-    freelancer_id:{
+
+    freelancer_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }
-   
+
   });
 
   return Talents;
