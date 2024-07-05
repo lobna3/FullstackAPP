@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router,  Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import NavBar from './component/NavBar.jsx';
 import Home from './component/pages/Home.jsx';
@@ -15,10 +15,11 @@ import axios from 'axios'
 import AllTalent from './component/pages/AllTalent.jsx';
 
 function App() {
-  const [SignUprole,setSignUpRole]=useState('')
-  const [userRole,setUserRole]=useState('')
+  const [SignUprole, setSignUpRole] = useState('')
+  const [userRole, setUserRole] = useState('')
   const [talents, setTalents] = useState([])
   const [refetsch, setRefetsch] = useState(false)
+  const [oneTalent, setOneTalent] = useState({})
 
 
   const getTalents = () => {
@@ -41,26 +42,39 @@ function App() {
       })
   }
 
+  const deleteTalent =(id)=>{
+    axios.delete(`http://127.0.0.1:5000/api/talents/${id}`).then((response) => {
+      console.log('Talent deleted successfully', response.data)
+      setRefetsch(!refetsch)
+     }).catch((error)=>{console.log(error)})
+  }
+
+
   useEffect(() => {
- getTalents()
+    getTalents()
   }, [refetsch])
+
+  const onChange = (talent) => {
+    setOneTalent(talent)
+  }
+
   return (
     <Router>
-       <NavBar userRole={userRole}/>
+      <NavBar userRole={userRole} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
-        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
-        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
-        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
-        <Route path="/login" element={<Login userRole={setUserRole}/>} />
+        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole} />} />
+        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole} />} />
+        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole} />} />
+        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole} />} />
+        <Route path="/login" element={<Login userRole={setUserRole} />} />
         <Route path="/programming" element={<Programming />} />
         <Route path="/graphics" element={<Graphics />} />
         <Route path="/digital-marketting" element={<DigitalMarketting />} />
-        <Route path="/addtalent" element={<CreateTalent add={postTalent}/>}></Route>
-        <Route path="/alltalent" element ={<AllTalent talents={talents}/>}></Route>
+        <Route path="/addtalent" element={<CreateTalent add={postTalent} />}></Route>
+        <Route path="/alltalent" element={<AllTalent talents={talents} change={onChange} delete={deleteTalent} />}></Route>
       </Routes>
-       <Footer/>
+      <Footer />
     </Router>
   )
 }
