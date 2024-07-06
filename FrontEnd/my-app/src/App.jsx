@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router,  Route, Routes, useAsyncError } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useAsyncError } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import NavBar from './component/NavBar.jsx';
 import Home from './component/pages/Home.jsx';
@@ -13,6 +13,7 @@ import Login from './component/pages/Login.jsx';
 import CreateTalent from './component/pages/CreateTalent.jsx';
 import axios from 'axios'
 import AllTalent from './component/pages/AllTalent.jsx';
+import UpdateTalent from './component/pages/UpdateTalent.jsx';
 import { jwtDecode } from "jwt-decode";
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
   const [talents, setTalents] = useState([])
   const [refetsch, setRefetsch] = useState(false)
   const [user,setUser]=useState({})
-  
+  const [oneTalent, setOneTalent] = useState({})
+
   const getTalents = () => {
     axios.get('http://127.0.0.1:5000/api/talents/getAll').then((response) => {
       console.log(response.data)
@@ -33,7 +35,7 @@ function App() {
 
   const postTalent = (body) => {
     axios.post('http://127.0.0.1:5000/api/talents/add', body).then((response) => {
-      console.log(response.data)
+      console.log('Talent added successfully', response.data)
       setRefetsch(!refetsch)
     })
       .catch((error) => {
@@ -41,8 +43,43 @@ function App() {
       })
   }
 
+  const deleteTalent = (id) => {
+    axios.delete(`http://127.0.0.1:5000/api/talents/${id}`).then((response) => {
+      console.log('Talent deleted successfully', response.data)
+      setRefetsch(!refetsch)
+    }).catch((error) => { console.log(error) })
+  }
+
+  const updateTalent = (id, body) => {
+    axios.put(`http://127.0.0.1:5000/api/talents/${id}`, body).then((response) => {
+      console.log('Talent updated successfully', response.data)
+      setRefetsch(!refetsch)
+    }).catch((error) => { console.log(error) })
+  }
+
+  const searchByTitle = (title) => {
+    axios.get(`http://127.0.0.1:5000/api/talents/title/${title}`).then((response) => {
+      console.log(response.data)
+      setTalents(response.data)
+    })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const searchByCategory = (category) => {
+    axios.get(`http://127.0.0.1:5000/api/talents/category/${category}`).then((response) => {
+      console.log(response.data)
+      setTalents(response.data)
+    })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  
   useEffect(() => {
- getTalents()
+    getTalents()
   }, [refetsch])
 
   useEffect(() => {
@@ -55,23 +92,29 @@ function App() {
   }, []);
 
 
+
+  const onChange = (talent) => {
+    setOneTalent(talent)
+  }
+
   return (
     <Router>
-       <NavBar user={user}/>
+      <NavBar user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
-        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
-        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
-        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
-        <Route path="/login" element={<Login user={setUser}/>} />
+        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole} />} />
+        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole} />} />
+        <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole} />} />
+        <Route path="/sign-up-form" element={<SignUpForm role={SignUprole} />} />
+        <Route path="/login" element={<Login user={setUser} />} />
         <Route path="/programming" element={<Programming />} />
         <Route path="/graphics" element={<Graphics />} />
         <Route path="/digital-marketting" element={<DigitalMarketting />} />
-        <Route path="/addtalent" element={<CreateTalent add={postTalent}/>}></Route>
-        <Route path="/alltalent" element ={<AllTalent talents={talents}/>}></Route>
+        <Route path="/addtalent" element={<CreateTalent add={postTalent} />}></Route>
+        <Route path="/alltalent" element={<AllTalent talents={talents} change={onChange} delete={deleteTalent} />}></Route>
+        <Route path="/updatetalent/:id" element={<UpdateTalent talent={oneTalent} update={updateTalent} />}></Route>
       </Routes>
-       <Footer/>
+      <Footer />
     </Router>
   )
 }
