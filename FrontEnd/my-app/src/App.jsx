@@ -78,6 +78,7 @@ function App() {
       })
   }
 
+  
   useEffect(() => {
     getTalents()
   }, [refetsch])
