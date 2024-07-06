@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router,  Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router,  Route, Routes, useAsyncError } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import NavBar from './component/NavBar.jsx';
 import Home from './component/pages/Home.jsx';
@@ -13,14 +13,14 @@ import Login from './component/pages/Login.jsx';
 import CreateTalent from './component/pages/CreateTalent.jsx';
 import axios from 'axios'
 import AllTalent from './component/pages/AllTalent.jsx';
+import { jwtDecode } from "jwt-decode";
 
 function App() {
   const [SignUprole,setSignUpRole]=useState('')
-  const [userRole,setUserRole]=useState('')
   const [talents, setTalents] = useState([])
   const [refetsch, setRefetsch] = useState(false)
-
-
+  const [user,setUser]=useState({})
+  
   const getTalents = () => {
     axios.get('http://127.0.0.1:5000/api/talents/getAll').then((response) => {
       console.log(response.data)
@@ -44,16 +44,27 @@ function App() {
   useEffect(() => {
  getTalents()
   }, [refetsch])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    if (token && isAuthenticated) {
+      const decodedToken = jwtDecode(token);
+      setUser(decodedToken)
+    }
+  }, []);
+
+
   return (
     <Router>
-       <NavBar userRole={userRole}/>
+       <NavBar user={user}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
         <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
         <Route path="/sign-up-role" element={<SignUpRole setSignUpRole={setSignUpRole} role={SignUprole}/>} />
         <Route path="/sign-up-form" element={<SignUpForm role={SignUprole}/>} />
-        <Route path="/login" element={<Login userRole={setUserRole}/>} />
+        <Route path="/login" element={<Login user={setUser}/>} />
         <Route path="/programming" element={<Programming />} />
         <Route path="/graphics" element={<Graphics />} />
         <Route path="/digital-marketting" element={<DigitalMarketting />} />

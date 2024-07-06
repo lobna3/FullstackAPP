@@ -13,6 +13,7 @@ import { CiBoxList } from "react-icons/ci";
 
 const NavBar = (props) => {
   const [dropDown, setDropDown] = useState(false)
+  console.log(props.user.id);
   return (
     <nav className='flex items-center flex-row p-2'>
       <div className="logo">
@@ -38,7 +39,7 @@ const NavBar = (props) => {
         <FiSearch size={18} className='cursor-pointer text-[#181818]' />
         <input type='search' placeholder='Search' className='search-inp ml-2 outline-none '></input>
       </div>
-      {props.userRole === '' &&
+      {!props.user.id &&
         <>
           <div className="login ml-20">
             <NavLink to='/login'>
@@ -53,7 +54,7 @@ const NavBar = (props) => {
           </div>
         </>
       }
-      {props.userRole === 'client' && <div className='profile-client flex items-center ml-14 cursor-pointer' onClick={() => setDropDown(true)}>
+      {props.user.role === 'client' && <div className='profile-client flex items-center ml-14 cursor-pointer' onClick={() => setDropDown(true)}>
         <div className="client-prof flex items-center">
           <img src={ProfileImage} className='h-12'></img>
           <h3 className='font-medium cursor-pointer'>Username ▼</h3>
@@ -69,7 +70,7 @@ const NavBar = (props) => {
           </div>
         </div>}
       </div>}
-      {props.userRole === 'freelancer' && <div className='profile-freelancer flex items-center ml-14 cursor-pointer' onClick={() => setDropDown(!dropDown)}>
+      {props.user.role === 'freelancer' && <div className='profile-freelancer flex items-center ml-14 cursor-pointer' onClick={() => setDropDown(!dropDown)}>
         <div className="client-prof flex items-center">
           <img src={ProfileImage} className='h-12'></img>
           <h3 className='font-medium cursor-pointer'>Username ▼</h3>

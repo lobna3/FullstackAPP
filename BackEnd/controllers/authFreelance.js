@@ -30,7 +30,7 @@ const authController = {
       });
 
 
-      res.status(201).json({ message: 'User registered successfully', user: newUser });
+      res.status(201).json({ message: "success"});
     } catch (error) {
       
       console.error('Error in registration:', error);
@@ -59,12 +59,14 @@ const authController = {
 
       const token = jwt.sign({ id:user.id,
         name:user.name,
-        email:user.email 
+        email:user.email, 
+        role:'freelancer'
              }, process.env.JWT_SECRET || 'shhhhh', { expiresIn: '1h' });
 
       return res.status(200).json({
-        message: 'Login successful',
-        token: `Bearer ${token}`
+        message: 'success',
+        token: `Bearer ${token}`,
+        role:'freelancer'
       });
     } catch (error) {
       console.error('Error in login:', error);

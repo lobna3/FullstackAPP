@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { MdError } from "react-icons/md";
 import Logo from '../../image/th-logo.png'
-import PopSignUp from '../../popups/SignUpPopSucc.jsx'
+import PopSignUpSucc from '../../popups/SignUpPopSucc.jsx'
 const SignUpForm = (props) => {
 const [name,setName]=useState('')
 const [email,setEmail]=useState('')
@@ -12,7 +12,7 @@ const [password,setPassword]=useState('')
 const [phone,setPhone]=useState(null)
 const [image,setImage]=useState('https://th.bing.com/th/id/OIP.i_bAvIgZVwOB-3yN_pEDawAAAA?w=278&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7')
 const [error,setError]=useState('')
-console.log(error);
+const [success,setSuccess]=useState('')
 const freelancer ={
     name:name,
     email:email,
@@ -25,7 +25,7 @@ const freelancer ={
 const signupFreelancer=(newData)=>{
     axios.post('http://localhost:5000/api/freelance/register',newData)
     .then((response) => {
-       console.log('User registered successfully:', response.data);
+       setSuccess(response.data.message)
       }).catch((error)=>{console.log(error);})
 }
 
@@ -34,7 +34,7 @@ const signupFreelancer=(newData)=>{
 const signupClient = (addClient)=>{
     axios.post('http://127.0.0.1:5000/api/client/signup',addClient)
     .then((res)=>{
-        console.log('User registered successfully:');
+        setSuccess(res.data.message)
     }).catch((error)=>{console.log(error)})
 }
 
@@ -91,7 +91,7 @@ const checkPass =()=>{
 const handleSubmit = (e) => {
     e.preventDefault();
 }
-
+console.log(props.role);
   return (
     <div className='flex flex-col justify-center items-center'>
         {props.role==='client' && <h3 className='text-3xl font-medium flex justify-center mt-10'>Sign up to hire talent</h3> }
@@ -167,8 +167,15 @@ const handleSubmit = (e) => {
                 <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Upload Image:</label>
                 <input type="file" id="image" name="image" class="outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" accept="image/*"  onChange={(e)=>{setImage(e.target.value)}}/>
             </div>
-            
-            <button type="submit" class=" ml-40 mt-4 bg-[#108a00] hover:bg-[#3d9731] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={()=>{signupClient(freelancer),handelErr(),checkPass(),checkemail()}} >Sign Up</button>
+                <span type="submit" class=" ml-40 mt-4 bg-[#108a00] hover:bg-[#3d9731] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={()=>{if (props.role==="freelancer"){
+                    signupFreelancer(freelancer)}
+                    else if (props.role==="client"){
+                    signupClient(freelancer)}
+                    handelErr(),checkPass(),checkemail()
+                    }}> Sign Up</span> 
+                    
+      {success&&<PopSignUpSucc/>}
+
            <h3 className='mt-10 ml-24'>Already have an account? <NavLink className='font-semibold text-[#108a00] ml-1' to='/login'>Login</NavLink></h3>
         </form>
     </div>
