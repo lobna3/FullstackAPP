@@ -40,13 +40,15 @@ try {
           id: user.id,
           name:user.name,
           email: user.email,
+          role:'client'
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
       );
       res.status(200).json({
         message: "success",
-        token: "Bearer " + token
+        token: "Bearer " + token,
+        role:"client"
       });
 
   

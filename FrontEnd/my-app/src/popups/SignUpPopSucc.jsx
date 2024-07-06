@@ -1,5 +1,6 @@
 import React from 'react'
 import { FcOk } from "react-icons/fc";
+import { NavLink } from 'react-router-dom';
 
 const SignUp = () => {
   return (
@@ -8,9 +9,11 @@ const SignUp = () => {
    <FcOk className=' absolute -mt-20  ' size={70}/>
     <h1 className="font-bold text-3xl mb-2">Success</h1>
     <h2 className="text-sm mb-4">You logged successfully!</h2>
+    <NavLink to='/login'>
     <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring- -500">
       Sign Up
     </button>
+    </NavLink>
   </div>
 </div>
   )
