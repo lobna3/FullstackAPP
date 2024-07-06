@@ -13,6 +13,7 @@ import { CiBoxList } from "react-icons/ci";
 
 const NavBar = (props) => {
   const [dropDown, setDropDown] = useState(false)
+  
   return (
     <nav className='flex items-center flex-row p-2'>
       <div className="logo">

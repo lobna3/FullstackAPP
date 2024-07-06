@@ -2,27 +2,29 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-const CreateTalent = (props) => {
-    { console.log(props) }
-    const navigate = useNavigate()
 
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [imageUrl, setImageUrl] = useState("")
-    const [price, setPrice] = useState("")
-    const [category, setCategory] = useState("")
-    const [rating, setRating] = useState("")
+const UpdateTalent = ({talent,update}) => {
+    { console.log(talent) }
+    const navigate = useNavigate();
+
+    const [title, setTitle] = useState(talent.title)
+    const [description, setDescription] = useState(talent.description)
+    const [imageUrl, setImageUrl] = useState(talent.imageUrl)
+    const [price, setPrice] = useState(talent.price)
+    const [category, setCategory] = useState(talent.category)
+    const [rating, setRating] = useState(talent.rating)
+    const [delivery,setDelivery]=useState(talent.delivery)
     const [file, setFile] = useState('')
     const [loading, setLoading] = useState(false)
     const [res, setRes] = useState({})
-    const [delivery,setDelivery]=useState("")
+    
 
     console.log(imageUrl)
 
     const uploadImage = async () => {
         const form = new FormData()
         form.append('file', file)
-        form.append("upload_preset", "lobnasm")
+        form.append("upload_preset", "lobnasm");
         try {
             await axios.post("https://api.cloudinary.com/v1_1/dzhteldwd/upload", form).then((result) => {
                 console.log(result.data.secure_url)
@@ -39,7 +41,7 @@ const CreateTalent = (props) => {
             const data = new FormData()
             data.append("my_file", file)
             const res = await axios.post("http://127.0.0.1:5000/api/talents/upload", data)
-            setRes(res.data)
+            setRes(res.data);
             setImageUrl(res.data.secure_url)
             console.log(res.data.secure_url)
         } catch (error) {
@@ -116,7 +118,8 @@ const CreateTalent = (props) => {
                 <div class="mb-4">
                     <div class="relative">
                         <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Delivery:</label>
-                        <input type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Delivery" value={delivery}
+                        <input type="text" className=" outline-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        placeholder="Your Delivery" value={delivery}
                             onChange={(e) => { setDelivery(e.target.value) }}
                         />
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -126,7 +129,7 @@ const CreateTalent = (props) => {
                 </div>
 
                 <button class=" ml-28 mt-8 bg-[#108a00] hover:bg-[#3d9731] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="submit" onClick={() => {
-                    props.add({
+                    update(talent.id,{
                         title: title,
                         description: description,
                         imageUrl: imageUrl,
@@ -136,7 +139,7 @@ const CreateTalent = (props) => {
                         delivery:delivery,
                         freelancer_id: "1"
                     },navigate('/alltalent'))
-                }}>Create</button>
+                }}>Update</button>
             </div>
 
 
@@ -144,4 +147,4 @@ const CreateTalent = (props) => {
     )
 }
 
-export default CreateTalent
+export default UpdateTalent
